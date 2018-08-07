@@ -1,0 +1,16 @@
+[package]
+name = "rust-bindings"
+version = "0.1.0"
+authors = ["Alexis Beingessner <a.beingessner@gmail.com>"]
+description = "a vec that takes up less space on the stack"
+license = "MIT/Apache-2.0"
+repository = "https://github.com/gankro/tutorial-cbindgen"
+homepage = "https://github.com/gankro/tutorial-cbindgen"
+readme = "README.md"
+
+[lib]
+crate-type = ["staticlib"]
+
+# If you want to use build.rs:
+# [build-dependencies]
+# cbindgen = "*"
