@@ -49,7 +49,8 @@ pub extern fn double(a: u32,
                      c: Option<&mut u32>);
 ```
 
----
+Generated:
+---------
 
 ```cpp
 extern "C" {
@@ -67,7 +68,8 @@ extern "C" {
 pub struct MyStruct { a: u32, b: bool }
 ```
 
--------
+Generated:
+---------
 
 ```cpp
 struct MyStruct { uint32_t a; bool b; };
@@ -81,7 +83,8 @@ struct MyStruct { uint32_t a; bool b; };
 pub struct MyTuple(u8, MyStruct);
 ```
 
--------
+Generated:
+---------
 
 ```cpp
 struct MyTuple { uint8_t _0; MyStruct _1; };
@@ -94,6 +97,7 @@ struct MyTuple { uint8_t _0; MyStruct _1; };
 pub type Weight = f32;
 ```
 
+Generated:
 ---------
 
 ```cpp
@@ -109,25 +113,26 @@ using Weight = float;
 pub enum MyEnum { A, B, C }
 ```
 
--------
+Generated:
+---------
 
 ```cpp
 enum class MyEnum: uint32_t { A, B, C }
 ```
 
-# Fieldfull Enums
+# Fieldful Enums
 
 ```rust
 #[repr(u32)]
 pub enum COptionU32 { Some(u32), None, }
 ```
 
--------
+Generated:
+---------
 
 ```cpp
 union COptionU32 {
   enum class Tag : uint32_t { Some, None, };
-
   struct Some_Body { Tag tag; uint32_t _0; };
 
   struct { Tag tag; };
@@ -135,7 +140,7 @@ union COptionU32 {
 };
 ```
 
-# Fieldfull Enum Conveniences
+# Fieldful Enum Conveniences
 
 ```cpp
 auto val = COptionU32::Some(12);
@@ -147,8 +152,6 @@ if (val.IsSome()) {
 
 # Generic Structs (templated)
 
-(not functions or enums)
-
 ```rust
 #[repr(C)]
 pub struct MyGenericStruct<T> {
@@ -156,7 +159,8 @@ pub struct MyGenericStruct<T> {
 }
 ```
 
--------
+Generated:
+---------
 
 ```cpp
 template<typename T>
@@ -176,7 +180,8 @@ struct MyGenericStruct {
 pub extern fn process(input: MyGenericStruct<u8>)  { ... }
 ```
 
-----
+Generated:
+---------
 
 ```c
 typedef struct {
