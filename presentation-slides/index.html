@@ -107,7 +107,7 @@ if (val.IsSome()) {
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MyGenericStruct</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="ident">vals</span>: [<span class="ident">T</span>; <span class="number">16</span>],
 }</pre>
-<p>...generates...</p>
+<h2 id="generated-6" class="section-header"><a href="#generated-6">Generated:</a></h2>
 <pre><code class="language-cpp">template&lt;typename T&gt;
 struct MyGenericStruct {
   T vals[16];
@@ -117,7 +117,7 @@ struct MyGenericStruct {
 <pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
 <span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">process</span>(<span class="ident">input</span>: <span class="ident">MyGenericStruct</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>)</pre>
-<h2 id="generated-6" class="section-header"><a href="#generated-6">Generated:</a></h2>
+<h2 id="generated-7" class="section-header"><a href="#generated-7">Generated:</a></h2>
 <pre><code class="language-c">typedef struct {
   uint8_t vals[16];
 } MyGenericStruct_u8;
