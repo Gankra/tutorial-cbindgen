@@ -12,7 +12,7 @@ slides: https://github.com/Gankro/tutorial-cbindgen/
 
 # What is cbindgen?
 
-A tool that creates C(++) headers for Rust libraries!
+Creates C(++) headers for Rust libraries!
 
 github.com/eqrion/cbindgen
 
@@ -27,20 +27,35 @@ cargo install cbindgen
 
 Webrender!
 
+* Rewrite of firefox's graphics in Rust
+* Lots of C++ calling into Rust
+* Managing bindings by hand too error-prone
+
+
+
+
+# What Can cbindgen Do?
+
+Let's see!
+
 
 
 # Functions
 
 ```rust
 #[no_mangle]
-pub extern fn double(input: Option<&mut u32>) -> u32 { ... }
+pub extern fn double(a: u32,
+                     b: &mut u32,
+                     c: Option<&mut u32>);
 ```
 
 ---
 
 ```cpp
 extern "C" {
-  uint32_t double(uint32_t* input);
+  void double(uint32_t a,
+              uint32_t* b,
+              uint32_t* c);
 }
 ```
 

@@ -29,20 +29,31 @@
 <img src="firefox-nightly.png" width="250" style="display:inline; box-shadow:none;"></img></p>
 <p>slides: https://github.com/Gankro/tutorial-cbindgen/</p>
 <h1 id="what-is-cbindgen" class="section-header"><a href="#what-is-cbindgen">What is cbindgen?</a></h1>
-<p>Rust Library =&gt; C(++) Header</p>
+<p>Creates C(++) headers for Rust libraries!</p>
 <p>github.com/eqrion/cbindgen</p>
 
 <pre class="rust rust-example-rendered">
 <span class="ident">cargo</span> <span class="ident">install</span> <span class="ident">cbindgen</span></pre>
 <h1 id="why-is-cbindgen" class="section-header"><a href="#why-is-cbindgen"><strong>Why</strong> is cbindgen?</a></h1>
 <p>Webrender!</p>
+<ul>
+<li>Rewrite of firefox's graphics in Rust</li>
+<li>Lots of C++ calling into Rust</li>
+<li>Managing bindings by hand too error-prone</li>
+</ul>
+<h1 id="what-can-cbindgen-do" class="section-header"><a href="#what-can-cbindgen-do">What Can cbindgen Do?</a></h1>
+<p>Let's see!</p>
 <h1 id="functions" class="section-header"><a href="#functions">Functions</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">double</span>(<span class="ident">input</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> { ... }</pre>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">double</span>(<span class="ident">a</span>: <span class="ident">u32</span>,
+                     <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span>,
+                     <span class="ident">c</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span><span class="op">&gt;</span>);</pre>
 <hr />
 <pre><code class="language-cpp">extern &quot;C&quot; {
-  uint32_t double(uint32_t* input);
+  void double(uint32_t a,
+              uint32_t* b,
+              uint32_t* c);
 }
 </code></pre>
 <h1 id="structsunions" class="section-header"><a href="#structsunions">Structs/Unions</a></h1>
