@@ -12,7 +12,7 @@ slides: https://github.com/Gankro/tutorial-cbindgen/
 
 # What is cbindgen?
 
-Rust Library => C(++) Header
+A tool that creates C(++) headers for Rust libraries!
 
 github.com/eqrion/cbindgen
 

@@ -1,4 +1,4 @@
-#include "bindings.h"
+#include "generated_bindings.h"
 #include "stdio.h"
 
 int main() {
