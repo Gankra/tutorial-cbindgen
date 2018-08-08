@@ -187,6 +187,10 @@ Generated:
 typedef struct {
   uint8_t vals[16];
 } MyGenericStruct_u8;
+
+extern "C" {
+  void process(MyGenericStruct_u8 input);
+}
 ```
 
 

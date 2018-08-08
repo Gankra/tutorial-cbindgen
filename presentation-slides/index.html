@@ -121,6 +121,10 @@ struct MyGenericStruct {
 <pre><code class="language-c">typedef struct {
   uint8_t vals[16];
 } MyGenericStruct_u8;
+
+extern &quot;C&quot; {
+  void process(MyGenericStruct_u8 input);
+}
 </code></pre>
 <h1 id="how-does-it-work" class="section-header"><a href="#how-does-it-work">How Does it Work?</a></h1>
 <ul>
