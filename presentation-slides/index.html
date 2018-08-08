@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <title>cbindgen</title>
+
+    
+    <link rel="stylesheet" href="rust.css">
+<link rel="stylesheet" href="sliderust.css">
+<script src="sliderust.js"></script>
+
+
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+    <h1 class="title">cbindgen</h1>
+    <p>Alexis Beingessner</p>
+<p><a href="http://cglab.ca/%7Eabeinges"><img src="icon.png" width="250" style="display:inline; box-shadow:none;"></img></a>
+<a href="https://rust-lang.org"><img src="rust.png" width="250" style="display:inline; box-shadow:none;"></img></a>
+<img src="firefox-nightly.png" width="250" style="display:inline; box-shadow:none;"></img></p>
+<p>slides: https://github.com/Gankro/tutorial-cbindgen/</p>
+<h1 id="what-is-cbindgen" class="section-header"><a href="#what-is-cbindgen">What is cbindgen?</a></h1>
+<p>Rust Library =&gt; C(++) Header</p>
+<p>github.com/eqrion/cbindgen</p>
+
+<pre class="rust rust-example-rendered">
+<span class="ident">cargo</span> <span class="ident">install</span> <span class="ident">cbindgen</span></pre>
+<h1 id="why-is-cbindgen" class="section-header"><a href="#why-is-cbindgen"><strong>Why</strong> is cbindgen?</a></h1>
+<p>Webrender!</p>
+<h1 id="functions" class="section-header"><a href="#functions">Functions</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">double</span>(<span class="ident">input</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> { ... }</pre>
+<hr />
+<pre><code class="language-cpp">extern &quot;C&quot; {
+  uint32_t double(uint32_t* input);
+}
+</code></pre>
+<h1 id="structsunions" class="section-header"><a href="#structsunions">Structs/Unions</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MyStruct</span> { <span class="ident">a</span>: <span class="ident">u32</span>, <span class="ident">b</span>: <span class="ident">bool</span> }</pre>
+<hr />
+<pre><code class="language-cpp">struct MyStruct { uint32_t a; bool b; };
+</code></pre>
+<h1 id="tuple-structs" class="section-header"><a href="#tuple-structs">Tuple Structs</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MyTuple</span>(<span class="ident">u8</span>, <span class="ident">MyStruct</span>);</pre>
+<hr />
+<pre><code class="language-cpp">struct MyTuple { uint8_t _0; MyStruct _1; };
+</code></pre>
+<h1 id="typedefs" class="section-header"><a href="#typedefs">Typedefs</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Weight</span> <span class="op">=</span> <span class="ident">f32</span>;</pre>
+<hr />
+<pre><code class="language-cpp">using Weight = float;
+</code></pre>
+<h1 id="fieldless-enums" class="section-header"><a href="#fieldless-enums">Fieldless Enums</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MyEnum</span> { <span class="ident">A</span>, <span class="ident">B</span>, <span class="ident">C</span> }</pre>
+<hr />
+<pre><code class="language-cpp">enum class MyEnum: uint32_t { A, B, C }
+</code></pre>
+<h1 id="fieldfull-enums" class="section-header"><a href="#fieldfull-enums">Fieldfull Enums</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">COptionU32</span> { <span class="prelude-val">Some</span>(<span class="ident">u32</span>), <span class="prelude-val">None</span>, }</pre>
+<hr />
+<pre><code class="language-cpp">union COptionU32 {
+  enum class Tag : uint32_t { Some, None, };
+
+  struct Some_Body { Tag tag; uint32_t _0; };
+
+  struct { Tag tag; };
+  Some_Body some;
+};
+</code></pre>
+<h1 id="fieldfull-enum-conveniences" class="section-header"><a href="#fieldfull-enum-conveniences">Fieldfull Enum Conveniences</a></h1>
+<pre><code class="language-cpp">auto val = COptionU32::Some(12);
+if (val.IsSome()) {
+  printf(&quot;%d\n&quot;, val.some._0);
+}
+</code></pre>
+<h1 id="generic-structs-templated" class="section-header"><a href="#generic-structs-templated">Generic Structs (templated)</a></h1>
+<p>(not functions or enums)</p>
+
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MyGenericStruct</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">vals</span>: [<span class="ident">T</span>; <span class="number">16</span>],
+}</pre>
+<hr />
+<pre><code class="language-cpp">template&lt;typename T&gt;
+struct MyGenericStruct {
+  T vals[16];
+};
+</code></pre>
+<h1 id="generic-structs-instantiated" class="section-header"><a href="#generic-structs-instantiated">Generic Structs (instantiated)</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">process</span>(<span class="ident">input</span>: <span class="ident">MyGenericStruct</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>)  { ... }</pre>
+<hr />
+<pre><code class="language-c">typedef struct {
+  uint8_t vals[16];
+} MyGenericStruct_u8;
+</code></pre>
+<h1 id="how-does-it-work" class="section-header"><a href="#how-does-it-work">How Does it Work?</a></h1>
+<ul>
+<li>grab all <code>#[no_mangle] pub extern fns</code></li>
+<li>grab all types those reference
+<ul>
+<li>and types those reference
+<ul>
+<li>and ...</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>(note: hacky parser)</p>
+<h1 id="how-does-it-work-1" class="section-header"><a href="#how-does-it-work-1">How Does it Work?</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">process</span>(<span class="ident">val</span>: <span class="ident">Input</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { ... }
+
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Input</span> {
+  <span class="ident">data</span>: <span class="ident">Data</span>,
+}
+
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Data</span> { <span class="ident">A</span>, <span class="ident">B</span>, <span class="ident">C</span> }</pre>
+<h1 id="how-to-use-it" class="section-header"><a href="#how-to-use-it">How To Use It</a></h1>
+<ul>
+<li>as a lib in build.rs</li>
+<li>as a cli tool</li>
+</ul>
+<h1 id="lets-look-at-a-simple-codebase" class="section-header"><a href="#lets-look-at-a-simple-codebase">Let's Look at a Simple Codebase</a></h1>
+<p>https://github.com/Gankro/tutorial-cbindgen</p>
+<ul>
+<li><code>rust-bindings/</code>
+<ul>
+<li><code>cbindgen.toml</code></li>
+<li><code>Cargo.toml</code></li>
+<li><code>src/lib.rs</code></li>
+</ul>
+</li>
+<li><code>build.sh</code></li>
+<li><code>main.cpp</code></li>
+</ul>
+<h1 id="pitfalls" class="section-header"><a href="#pitfalls">Pitfalls</a></h1>
+<ul>
+<li>Doesn't respect namespacing</li>
+<li>Doesn't support non-POD types (destructors)</li>
+<li>Doesn't work if there's any <code>repr(rust)</code> types</li>
+</ul>
+
+    
+</body>
+</html>

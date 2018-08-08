@@ -1,0 +1,203 @@
+html, body {
+    max-width: 1125px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+h1 {
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 50px;
+}
+
+body, h5 {
+    font-size: 50px;
+}
+
+pre {
+    font-size: 36px;
+}
+
+section {
+    display: none;
+}
+
+section.current {
+    display: block;
+}
+
+section.title-slide {
+    text-align: center;
+    font-weight: bold;
+    font-size: 90%;
+}
+.title-slide p {
+  margin: 0 0 15px;
+}
+.title-slide p:first-of-type {
+  font-size: 120%;
+}
+code.language-text {
+    /* Servo doesn't support pre-wrap yet */
+    /* white-space: normal; */
+}
+
+body, h1, h2, h3, h4, h5, h6, nav {
+    font-family: sans-serif;
+}
+
+pre, code {
+    font-family: monospace;
+}
+
+ul {
+    list-style: none;
+}
+ul, ol {
+  padding-left: 40px;
+}
+
+li::before {
+    content: "\2022\A0";
+    display: inline-block;
+    width: 40px;
+    margin-left: -40px;
+}
+
+#nav-symbols {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
+    font-size: 40px;
+
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+}
+.nav-symbol {
+    padding: 10px;
+    cursor: pointer;
+}
+.disabled {
+    color: lightgray;
+}
+
+
+/* customisation */
+
+blockquote {
+  font-weight: 300;
+}
+blockquote p {
+  font-size: inherit;
+}
+.attribution {
+  text-align: right;
+  font-size: 90%;
+  font-weight: normal;
+}
+.attribution::before {
+  content: "— ";
+}
+
+.vertical-centre {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1195px;
+  max-width: 100%;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+img.noshadow {
+  box-shadow: none;
+}
+
+
+h1:empty {
+  margin: 10px 0;
+  padding: 0;
+  border: none;
+}
+
+pre {
+  margin: 0;
+}
+
+.language-error {
+  color: red;
+  font-size: 0.9em;
+}
+
+.introduced {
+  background: yellow;
+}
+.post-pause .introduced {
+  background: none;
+}
+.original {
+  display: none;
+}
+
+#stats {
+  margin: 0 auto;
+  border-spacing: 0 20em;
+}
+table td, table th {
+  border: 0px;
+  padding: 0.25em 5px;
+}
+table th {
+  font-weight: normal;
+}
+.num {
+  text-align: right;
+  color: red;
+}
+.thing {
+  text-align: left;
+}
+
+.website img {
+  display: inline-block;
+}
+.website {
+  width: 1000px;
+  margin: 40px auto;
+}
+.footnote {
+  float: right;
+}
+#new-website .footnote { visibility: hidden; }
+
+
+.highlight1 {
+  background-color: yellow;
+  display: inline;
+}
+
+.highlight2 {
+  background-color: #ffaaaa;
+  display: inline;
+}
+
+.highlight3 {
+  background-color: #aaffaa;
+  display: inline;
+}
+
+.highlight4 {
+  background-color: #aaaaff;
+  display: inline;
+}
