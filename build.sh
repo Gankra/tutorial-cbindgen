@@ -1,6 +1,8 @@
 #!/bin/sh
 
-cbindgen rust-bindings -o bindings.h
+# pre-req: cargo install --force cbindgen
+
+cbindgen rust-bindings -o generated_bindings.h
 
 cd rust-bindings
 cargo build --release
