@@ -116,7 +116,7 @@ struct MyGenericStruct {
 <h1 id="generic-structs-instantiated" class="section-header"><a href="#generic-structs-instantiated">Generic Structs (instantiated)</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">process</span>(<span class="ident">input</span>: <span class="ident">MyGenericStruct</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>)  { ... }</pre>
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">process</span>(<span class="ident">input</span>: <span class="ident">MyGenericStruct</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>)</pre>
 <h2 id="generated-7" class="section-header"><a href="#generated-7">Generated:</a></h2>
 <pre><code class="language-c">typedef struct {
   uint8_t vals[16];

@@ -177,7 +177,7 @@ struct MyGenericStruct {
 
 ```rust
 #[no_mangle]
-pub extern fn process(input: MyGenericStruct<u8>)  { ... }
+pub extern fn process(input: MyGenericStruct<u8>)
 ```
 
 Generated:
